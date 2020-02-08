@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Xvue</title>
+</head>
+<body>
+<div id="app"></div>
+</body>
+<script src="./vdom.js"></script>
+<script src="./xvue.js"></script>
+<script>
+  let app = new XVue({
+    el: '#app',
+    data: {
+      a: 4,
+      text: '绿色p标签',
+      reve: true
+    },
+    render(h) {
+      return h('div', { key: 'a', class: 'col' }, this.reve ? [
+        h('p', { key: 'b', style: { color: 'red' } }, '红色p标签'),
+        h('span', { key: 'c', '@click': () => alert('点击事件') }, this.text),
+        h('p', { key: 'd', xtext: this.a }, null),
+        // h('input', { xmodel: this.a }, null)
+      ] : [
+        h('p', { key: 'd', xtext: this.a }, null),
+        h('p', { key: 'b', style: { color: 'red' } }, '红色p标签'),
+        h('p', { key: 'e', style: { color: 'red' } }, '红色E标签'),
+        h('span', { key: 'c', '@click': () => alert('点击事件') }, this.text),
+      ] )
+      // return h('div', { class: 'col' }, this.a)
+    },
+    mounted() {
+      // let inter = setInterval(() => {
+      //   this.a = ++this.a
+      // }, 1000)
+      setTimeout(() => {
+        // clearInterval(inter)
+        this.reve = false
+      }, 500)
+    }
+  }).$mount()
+
+</script>
+</html>
